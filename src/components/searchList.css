@@ -1,0 +1,9 @@
+.make_container {
+    max-height: 240px;
+    overflow: scroll;
+}
+
+.models_container {
+    max-height: 240px;
+    overflow: scroll;
+}
