@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import {Link, Redirect} from 'react-router-dom';
 import cars from '../cars';
 import './searchList.css'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonGroup, Button } from 'reactstrap';
 
 class SearchList extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.toggleMake = this.toggleMake.bind(this);
         this.toggleModel = this.toggleModel.bind(this);
@@ -32,6 +33,7 @@ class SearchList extends Component {
     }
 
     selectedMake = (e) => {
+        if (this.state.currentModel) this.setState({currentModel: null})
         const make = e.target.innerText;
         this.setState({
             currentMake: make
@@ -62,6 +64,10 @@ class SearchList extends Component {
 
     selectedModel = (e) => {
         this.setState({currentModel: e.target.innerText}, ()=> console.log(this.state))
+    }
+
+    clickedSearchWithoutInfo = () => {
+      console.log(this.props)
     }
 
     render() {
@@ -96,7 +102,12 @@ class SearchList extends Component {
                         </DropdownMenu>
                     </Dropdown>
                     <div className='modelName'>{this.state.currentModel}</div>
-                    <Button color="primary" size="sm">Search</Button>
+                    {
+                        this.state.currentMake && this.state.currentModel ?
+                        <Link to={`/search/${this.state.currentMake}/${this.state.currentModel}`}><Button color="primary" size="sm" onClick={this.clickedSearch}>Search</Button></Link>
+                        :
+                        <Button color="primary" size="sm" onClick={this.clickedSearchWithoutInfo}>Search</Button>
+                    }
                 </ButtonGroup>
             </>
         );

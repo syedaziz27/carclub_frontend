@@ -1,0 +1,6 @@
+const Services = {};
+
+Services.clearSearch = () => {
+    
+}
+

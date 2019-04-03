@@ -7,6 +7,7 @@ import Home from './containers/home';
 import Login from './containers/login';
 import Logout from './containers/logout';
 import Signup from './containers/signup';
+import Search from './containers/search';
 import Error404 from './components/error404';
 
 import AuthContext from './contexts/auth';
@@ -43,6 +44,7 @@ class App extends Component {
               <Route path='/signup' exact component={ Signup } />
               <Route path='/login' exact component={ Login } />
               <Route path='/logout' exact component={ Logout } />
+              <Route path='/search/:make/:model' exact component={ Search}/>
               <Route component={ Error404 } />
             </Switch>
           </AuthContext.Provider>
