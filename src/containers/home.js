@@ -27,7 +27,7 @@ class Home extends Component {
             }
 
           </AuthContext.Consumer>
-          <img className='home_img' src='https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/model/one-off/centenario/slider/centenario.jpg'/>
+          <img className='home_img' src='https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/model/one-off/centenario/slider/centenario.jpg' alt=''/>
           </>
         )
     }

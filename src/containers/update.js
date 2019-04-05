@@ -1,17 +1,7 @@
 import React from 'react';
 import AuthContext from '../contexts/auth';
 import * as firebase from 'firebase';
-import { Redirect } from 'react-router-dom';
 import Axios from 'axios';
-
-const config = {
-    apiKey: "AIzaSyBQE1rZaeVcLdhjLDhfy2OP5vg9wZJUPP4",
-    authDomain: "carclub-de5aa.firebaseapp.com",
-    databaseURL: "https://carclub-de5aa.firebaseio.com",
-    projectId: "carclub-de5aa",
-    storageBucket: "carclub-de5aa.appspot.com",
-    messagingSenderId: "575870150744"
-};
 
 export default class Update extends React.Component {
 

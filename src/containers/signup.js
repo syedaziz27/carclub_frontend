@@ -2,9 +2,9 @@ import React from 'react';
 import firebase from '../firebase';
 import AuthContext from '../contexts/auth';
 import { Redirect } from 'react-router-dom';
-import ServiceWorker from '../services';
 import Axios from 'axios';
 
+import ServiceWorker from '../services/services';
 import './signup.css'
 
 export default class Signup extends React.Component {
@@ -16,7 +16,8 @@ export default class Signup extends React.Component {
     city: '',
     state: '',
     zip: '',
-    img: '...',
+    picture: '...',
+    uid: '',
     error: ''
   }
 
@@ -24,7 +25,7 @@ export default class Signup extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password, username, city, state, zip } = this.state;
 
@@ -32,37 +33,40 @@ export default class Signup extends React.Component {
       alert('missing inputs');
       return;
     }
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        console.log('Returns: ', response);
-      })
-      .then(() => {
-        console.log('HELLLOOOOOOOOOO')
-        // Axios('https://localhost:3004/signup/', {
-        //   method: 'POST',
-        //   data: {
-        //     username,
-        //     email,
-        //     city,
-        //     state,
-        //     zip
-        //   }
-        // })
-        Axios.post(`http://localhost:3004/signup`, {
-          username,
-          email,
-          city,
-          state,
-          zip
-        })
-          .then((res) => {
-            console.log(res)
-          })
-      })
-      .catch(err => {
-        const { message } = err;
-        this.setState({ error: message });
-      })
+    
+    // firebase.auth().createUserWithEmailAndPassword(email, password)
+    //   .then((response) => {
+    //     console.log('Returns: ', response.user.uid);
+    //     return response.user.uid;
+    //   })
+    //   .then((uid) => {
+    //     console.log('HELLLOOOOOOOOOO')
+    //     return Axios.post(`http://localhost:3004/user/signup`, {
+    //       username,
+    //       email,
+    //       city,
+    //       state,
+    //       zip,
+    //       uid
+    //     })
+    //   })
+    //   .then((res) => {
+    //     console.log(res)
+    //     console.log(this.state)
+    //     this.setState({email, password, username, city, state, zip})
+    //   })
+    //   .catch(err => {
+    //     const { message } = err;
+    //     this.setState({ error: message });
+    //   })
+
+      const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const uid = response.user.uid;
+      const post = await ServiceWorker.createUser(username, email,city, state, zip, uid)
+
+      console.log(post);
+      await this.setState({email, password, username, city, state, zip})
+
   }
 
 

@@ -11,6 +11,8 @@ import Search from './containers/search';
 import Update from './containers/update';
 import Error404 from './components/error404';
 
+import ServiceWorker from './services/services';
+
 import AuthContext from './contexts/auth';
 
 class App extends Component {
@@ -22,7 +24,22 @@ class App extends Component {
     componentDidMount() {
       this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          this.setState({ user });
+          // let user1 = user;
+          
+          // console.log(user1)
+          const {email} = user;
+          console.log(email)
+
+          ServiceWorker.getUserData(email)
+           .then((data) => {
+             console.log(data)
+
+           })
+           .then(() => this.setState({ user }))  
+           .catch(err => {
+             console.log(err)
+           })
+          this.setState({user})
         }
         else {
           this.setState({ user: null })
@@ -30,9 +47,9 @@ class App extends Component {
       })
     }
   
-    // componentWillUnmount() {
-    //   this.unsubscribe()
-    // }
+    componentWillUnmount() {
+      this.unsubscribe()
+    }
 
 
   render() {

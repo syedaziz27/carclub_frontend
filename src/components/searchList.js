@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import cars from '../cars';
 import './searchList.css'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonGroup, Button } from 'reactstrap';
@@ -42,9 +42,8 @@ class SearchList extends Component {
 
     getModels = () => {
         let models = [];
-        if (this.state.currentMake === null) console.log('efasfsa')
+        if (this.state.currentMake === null) return
         else {
-
             for (let i = 0; i < this.state.cars.length; i++) {
                 if (this.state.currentMake === this.state.cars[i].make) {
                     models = this.state.cars[i].model
