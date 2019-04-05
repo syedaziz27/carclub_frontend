@@ -67,7 +67,15 @@ class SearchList extends Component {
     }
 
     clickedSearchWithoutInfo = () => {
-      console.log(this.props)
+      alert('Please Select Make and Model')
+    }
+
+    clickedSearch = (e) => {
+        const make = e.target.parentNode.parentNode.children[1];
+        const model = e.target.parentNode.parentNode.children[3];
+
+        make.innerText = '';
+        model.innerText = ''
     }
 
     render() {

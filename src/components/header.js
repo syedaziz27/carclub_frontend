@@ -14,6 +14,7 @@ export default () => {
 
     const loggedIn = <><li className="nav-item">
         <Link className="nav-link" to="/logout">Logout</Link>
+        <Link className='nav-link' to="/update">Update Profile</Link>
     </li></>
 
     return (

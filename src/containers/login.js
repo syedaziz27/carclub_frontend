@@ -54,6 +54,7 @@ export default class Login extends React.Component {
         {
           (user) => {
             if (user) {
+              console.log(user.email)
               return <Redirect to='/' />
             } else {
               return displayForm;
