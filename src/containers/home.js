@@ -12,7 +12,7 @@ class Home extends Component {
                 if (user) {
                   return (
                     <>
-                      <h2>Welcome back, {user.email}</h2>
+                      <h2>Welcome back, {user.username}</h2>
                       <h4>Your ID is: {user.uid}</h4>
                     </>
                   )

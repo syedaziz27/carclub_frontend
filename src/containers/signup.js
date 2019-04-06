@@ -34,38 +34,26 @@ export default class Signup extends React.Component {
       return;
     }
     
-    // firebase.auth().createUserWithEmailAndPassword(email, password)
-    //   .then((response) => {
-    //     console.log('Returns: ', response.user.uid);
-    //     return response.user.uid;
-    //   })
-    //   .then((uid) => {
-    //     console.log('HELLLOOOOOOOOOO')
-    //     return Axios.post(`http://localhost:3004/user/signup`, {
-    //       username,
-    //       email,
-    //       city,
-    //       state,
-    //       zip,
-    //       uid
-    //     })
-    //   })
-    //   .then((res) => {
-    //     console.log(res)
-    //     console.log(this.state)
-    //     this.setState({email, password, username, city, state, zip})
-    //   })
-    //   .catch(err => {
-    //     const { message } = err;
-    //     this.setState({ error: message });
-    //   })
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((response) => {
+        console.log('Returns: ', response.user.uid);
+        return response.user.uid;
+      })
+      .then((uid) => {
+        console.log('HELLLOOOOOOOOOO')
+        return ServiceWorker.createUser(username, email, city, state, zip, uid);
+      })
+      .then((res) => {
+        console.log(res)
+        console.log(this.state)
+        this.setState({email, password, username, city, state, zip})
+      })
+      .catch(err => {
+        const { message } = err;
+        this.setState({ error: message });
+      })
 
-      const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
-      const uid = response.user.uid;
-      const post = await ServiceWorker.createUser(username, email,city, state, zip, uid)
 
-      console.log(post);
-      await this.setState({email, password, username, city, state, zip})
 
   }
 

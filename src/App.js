@@ -9,6 +9,7 @@ import Logout from './containers/logout';
 import Signup from './containers/signup';
 import Search from './containers/search';
 import Update from './containers/update';
+import MyCars from  './containers/myCars';
 import Error404 from './components/error404';
 
 import ServiceWorker from './services/services';
@@ -33,9 +34,9 @@ class App extends Component {
           ServiceWorker.getUserData(email)
            .then((data) => {
              console.log(data)
-
+             this.setState({user: data.data.data})
+             console.log(this.state.user)
            })
-           .then(() => this.setState({ user }))  
            .catch(err => {
              console.log(err)
            })
@@ -63,7 +64,8 @@ class App extends Component {
               <Route path='/login' exact component={ Login } />
               <Route path='/logout' exact component={ Logout } />
               <Route path='/search/:make/:model' exact component={ Search}/>
-              <Route path='/update' exact component={Update}></Route>
+              <Route path='/update' exact component={Update}/>
+              <Route path='/mycars' exact component={MyCars}/>
               <Route component={ Error404 } />
             </Switch>
           </AuthContext.Provider>
