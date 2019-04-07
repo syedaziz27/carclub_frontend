@@ -10,6 +10,8 @@ import Signup from './containers/signup';
 import Search from './containers/search';
 import Update from './containers/update';
 import MyCars from  './containers/myCars';
+import Vehicle from './containers/vehicle';
+import Favorites from './containers/myFavorites';
 import Error404 from './components/error404';
 
 import ServiceWorker from './services/services';
@@ -66,6 +68,8 @@ class App extends Component {
               <Route path='/search/:make/:model' exact component={ Search}/>
               <Route path='/update' exact component={Update}/>
               <Route path='/mycars' exact component={MyCars}/>
+              <Route path='/vehicle/:vehicleID' exact component={Vehicle}/>
+              <Route path='/myfavorites' exact component={Favorites}/>
               <Route component={ Error404 } />
             </Switch>
           </AuthContext.Provider>

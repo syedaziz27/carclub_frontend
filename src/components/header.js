@@ -6,9 +6,6 @@ import './header.css'
 
 export default class Header extends React.Component {
 
-    state = {
-
-    }
 
      loggedOut = <><li className="nav-item">
         <Link className="nav-link" to="/signup">Sign Up</Link>
@@ -21,6 +18,7 @@ export default class Header extends React.Component {
         <Link className="nav-link" to="/logout">Logout</Link>
         <Link className='nav-link' to="/update">Update Profile</Link>
         <Link className='nav-link' to="/mycars">My Cars</Link>
+        <Link className='nav-link' to="/myfavorites">My Favorites</Link>
 
     </li></>
 
@@ -42,7 +40,7 @@ export default class Header extends React.Component {
                                     if (user) return (
                                         <>
                                         {this.loggedIn}
-                                        <img className='profile_pic' src={user.picture} alt={`alt`}></img>
+                                        <img className='profile_pic' src={user.picture} alt={user.picture}></img>
                                         <h3>{user.username}</h3>
                                         </>
                                     )

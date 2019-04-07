@@ -10,7 +10,10 @@ export default class Update extends React.Component {
         color: null,
         make: null,
         model: null,
-        picture: null
+        year: null,
+        picture: null,
+        mileage: null,
+        price: null
     }
 
     componentDidMount() {
@@ -52,7 +55,7 @@ export default class Update extends React.Component {
         const file = e.target.files[0];
 
         const root = firebase.storage().ref();
-        const pic = root.child(`${this.state.email}/car/${file}`);
+        const pic = root.child(`${this.state.email}/car/${file.name}`);
 
         try {
             const snapshot = await pic.put(file)
@@ -70,77 +73,69 @@ export default class Update extends React.Component {
     }
 
     typeMake = (e) => {
-        console.log(e.target.value)
+        console.log(e.target.value);
         this.setState({ make: e.target.value }, () => console.log(this.state))
     }
 
     typeModel = (e) => {
-        console.log(e.target.value)
+        console.log(e.target.value);
         this.setState({ model: e.target.value }, () => console.log(this.state))
     }
 
     typeColor = (e) => {
-        console.log(e.target.value)
+        console.log(e.target.value);
         this.setState({ color: e.target.value }, () => console.log(this.state))
+    }
+
+    typeYear = (e) => {
+        console.log(e.target.value);
+        this.setState({year: e.target.value}, () => console.log(this.state))
+    }
+    typeMiles = (e) => {
+        this.setState({mileage: e.target.value})
+    }
+    typePrice = (e) => {
+        this.setState({price: e.target.value})
     }
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const { email, color, make, model, picture } = this.state;
+        const { email, color, make, model, picture, year, price, mileage } = this.state;
 
-        if (!email || !make || !model || !color || !picture) {
+        if (!email || !make || !model || !color || !picture || !year || !price || !mileage) {
             alert('missing inputs');
             return;
         }
 
         else {
-            const data = await Axios.post('http://localhost:3004/car/front', { email, picture, make, model, color })
+            const data = await Axios.post('http://localhost:3004/car/front', { email, picture, make, model, color, year, mileage, price })
             console.log(data);
 
         }
 
-        // firebase.auth().createUserWithEmailAndPassword(email, password)
-        //   .then((response) => {
-        //     console.log('Returns: ', response.user.uid);
-        //     return response.user.uid;
-        //   })
-        //   .then((uid) => {
-        //     console.log('HELLLOOOOOOOOOO')
-        //     return ServiceWorker.createUser(username, email, city, state, zip, uid);
-        //   })
-        //   .then((res) => {
-        //     console.log(res)
-        //     console.log(this.state)
-        //     this.setState({email, password, username, city, state, zip})
-        //   })
-        //   .catch(err => {
-        //     const { message } = err;
-        //     this.setState({ error: message });
-        //   })
-
     }
 
 
-    // storeCarPics = async (e) => {
-    //     const files = e.target.files;
-    //     console.log(files)
-    //     const root = firebase.storage().ref();
+    storeCarPics = async (e) => {
+        const files = e.target.files;
+        console.log(files)
+        const root = firebase.storage().ref();
 
-    //     for (let i = 0; i < files.length; i++) {
-    //         const carPics = root.child(`${this.state.email}/car/${files[i]}`);
+        for (let i = 0; i < files.length; i++) {
+            const carPics = root.child(`${this.state.email}/car/${files[i].name}`);
 
-    //         try {
-    //             const snapshot = await carPics.put(files[i]);
-    //             const url = await snapshot.ref.getDownloadURL();
-    //             console.log(url)
-    //         }
+            try {
+                const snapshot = await carPics.put(files[i]);
+                const url = await snapshot.ref.getDownloadURL();
+                console.log(url)
+            }
 
-    //         catch (err) {
-    //             console.log(err)
-    //         }
-    //     }
+            catch (err) {
+                console.log(err)
+            }
+        }
 
-    // }
+    }
 
     render() {
         return (
@@ -184,6 +179,24 @@ export default class Update extends React.Component {
                                                     <span className="input-group-text" id="inputGroup-sizing-default">Color</span>
                                                 </div>
                                                 <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typeColor} />
+                                            </div>
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text" id="inputGroup-sizing-default">Year</span>
+                                                </div>
+                                                <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typeYear} />
+                                            </div>
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text" id="inputGroup-sizing-default">Mileage</span>
+                                                </div>
+                                                <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typeMiles} />
+                                            </div>
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text" id="inputGroup-sizing-default">Price</span>
+                                                </div>
+                                                <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typePrice} />
                                             </div>
                                         </div>
                                     </div>

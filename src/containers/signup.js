@@ -25,7 +25,7 @@ export default class Signup extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleSubmit = async (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { email, password, username, city, state, zip } = this.state;
 
@@ -33,28 +33,19 @@ export default class Signup extends React.Component {
       alert('missing inputs');
       return;
     }
-    
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        console.log('Returns: ', response.user.uid);
-        return response.user.uid;
-      })
-      .then((uid) => {
-        console.log('HELLLOOOOOOOOOO')
-        return ServiceWorker.createUser(username, email, city, state, zip, uid);
-      })
+
+    ServiceWorker.createUser(username, email, city, state, zip)
+      .then(() => firebase.auth().createUserWithEmailAndPassword(email, password))
       .then((res) => {
-        console.log(res)
+        console.log(res.user.uid)
         console.log(this.state)
-        this.setState({email, password, username, city, state, zip})
+        ServiceWorker.addUID(username, res.user.uid)
       })
+      .then(() => this.setState({ email, password, username, city, state, zip }))
       .catch(err => {
         const { message } = err;
         this.setState({ error: message });
       })
-
-
-
   }
 
 
