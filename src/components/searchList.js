@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import cars from '../cars';
 import './searchList.css'
-import QueryContext from '../contexts/query';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonGroup, Button } from 'reactstrap';
 
 class SearchList extends Component {

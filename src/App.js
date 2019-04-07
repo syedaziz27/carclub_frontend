@@ -27,9 +27,6 @@ class App extends Component {
     componentDidMount() {
       this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          // let user1 = user;
-          
-          // console.log(user1)
           const {email} = user;
           console.log(email)
 
@@ -42,7 +39,7 @@ class App extends Component {
            .catch(err => {
              console.log(err)
            })
-          this.setState({user})
+          // this.setState({user})
         }
         else {
           this.setState({ user: null })
