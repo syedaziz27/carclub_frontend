@@ -7,3 +7,113 @@
     max-height: 240px;
     overflow: scroll;
 }
+
+.makeName {
+    min-width: 20%
+}
+
+.srch-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: black;
+    /* opacity: 0.85; */
+    align-items: center;
+    min-height: 40px;
+    text-align: center;
+    border-bottom: .5px solid snow
+}
+
+.dropdown {
+    width: 50%
+}
+
+.dropdown-toggle {
+    width: 100%
+}
+
+button.dropdown-toggle {
+    background-color: black;
+    opacity: 0.85;
+    border: 0px;
+    font-size: 15.5px;
+}
+
+.btn-group {
+    justify-content: center
+}
+
+button.dropdown-toggle:hover {
+    border: 2px solid whitesmoke;
+    border-radius: 25px; 
+    background-color: black;
+    color: silver;
+}
+
+.btn-secondary:focus, .btn-secondary.focus {
+    box-shadow: black;
+}
+
+.makeName {
+    color: whitesmoke;
+    opacity: 0.85;
+}
+
+.modelName {
+    color: whitesmoke;
+    opacity: 0.85;
+}
+
+.srch-btn {
+    background-color: black;
+    opacity: 0.85;
+    color: whitesmoke;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.srch-btn:hover {
+    border: 2px solid whitesmoke;
+    border-radius: 25px; 
+    cursor: pointer;
+}
+
+.dropdown-menu.show {
+    opacity: .5;
+    background-color: black; 
+}
+
+button.dropdown-toggle.btn.btn-secondary.btn-sm{
+    background-color: black;
+}
+
+.make {
+    color: white;
+    align-self: center
+}
+
+.model {
+    color: white;
+}
+
+.make:hover {
+    background-color: black;
+}
+
+.button.dropdown-item:hover {
+    background-color: black;
+}
+
+.button.dropdown-item {
+    background-color: black;
+    padding: 0% important!
+}
+
+.dropdown-menu.show:hover {
+    background-color: black;
+}
+
+.dropdown-item:hover {
+    background-color: black !important;
+
+}
+

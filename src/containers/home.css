@@ -1,6 +1,6 @@
 .home_img {
-    max-width: 100%;
-    max-height: 50%
+    /* max-width: 100%;
+    max-height: 50% */
 }
 .carclub_header {
     background-color: black;
@@ -13,4 +13,26 @@
 
 .nav-item:hover {
     cursor: pointer;
+}
+
+.home-img {
+    /* grid-row: 1;
+    grid-column: 1; */
+    width: 100%; 
+    /* max-height: 100%; */
+
+}
+
+.welcome {
+    grid-row: 1;
+    grid-column: 1;
+    position: absolute;
+    top: 25%;
+    left: 3%;
+    font-size: 3vw;
+    color: white;
+}
+
+.carousel-item > img { 
+
 }

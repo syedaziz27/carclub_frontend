@@ -33,7 +33,7 @@ class SearchList extends Component {
     }
 
     selectedMake = (e) => {
-        if (this.state.currentModel) this.setState({currentModel: null})
+        if (this.state.currentModel) this.setState({ currentModel: null })
         const make = e.target.innerText;
         this.setState({
             currentMake: make
@@ -54,7 +54,10 @@ class SearchList extends Component {
             <>{
                 models.map((e, i) => {
                     return (
-                        <div className='model' key={i} onClick={this.selectedModel}>{e}</div>
+                        <DropdownItem>
+                            <div className='model' key={i} onClick={this.selectedModel}>{e}</div>
+                        </DropdownItem>
+                        
                     )
                 })
             }</>
@@ -62,61 +65,96 @@ class SearchList extends Component {
     }
 
     selectedModel = (e) => {
-        this.setState({currentModel: e.target.innerText}, ()=> console.log(this.state))
+        this.setState({ currentModel: e.target.innerText }, () => console.log(this.state))
     }
 
     clickedSearchWithoutInfo = () => {
-      alert('Please Select Make and Model')
+        alert('Please Select Both Make and Model')
     }
 
     clickedSearch = (e) => {
-        const make = e.target.parentNode.parentNode.children[1];
-        const model = e.target.parentNode.parentNode.children[3];
+        this.setState({ currentMake: null, currentModel: null })
+    }
 
-        make.innerText = '';
-        model.innerText = ''
+    checkMake = () => {
+        if (!this.state.currentMake) {
+            return (
+                'Select Make'
+            )
+        }
+        else {
+            return (
+                <div>{this.state.currentMake}</div>
+            )
+        }
+    }
+
+    checkModel = () => {
+        if (!this.state.currentModel) {
+            return (
+                'Select Model'
+            )
+        }
+        else {
+            return (
+                <div>{this.state.currentModel}</div>
+            )
+        }
     }
 
     render() {
         return (
-            <>
-                <ButtonGroup> 
+            <div className='srch-grid'>
+            <div></div>
+
+                <ButtonGroup>
                     <Dropdown isOpen={this.state.dropdownOpenMake} toggle={this.toggleMake}>
-                    <DropdownToggle caret size="sm">Make</DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem>
-                            <div className='make_container'>
-                                {
-                                    this.state.cars.map((e, i) => {
-                                        return (
-                                            <div className='make' onClick={this.selectedMake} key={i}>{e.make}</div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </DropdownItem>
-                    </DropdownMenu>
+                        <DropdownToggle caret size="sm">Make</DropdownToggle>
+                        <DropdownMenu>
+                            
+                                <div className='make_container'>
+                                    {
+                                        this.state.cars.map((e, i) => {
+                                            return (
+                                                <DropdownItem>
+                                                <div className='make' onClick={this.selectedMake} key={i}>{e.make}</div>
+                                                </DropdownItem>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            
+                        </DropdownMenu>
                     </Dropdown>
-                    <div className='makeName'>{this.state.currentMake}</div>
+                   
+                </ButtonGroup>
+                <div className='makeName'>{this.checkMake()}</div>
+                <ButtonGroup>
                     <Dropdown isOpen={this.state.dropdownOpenModel} toggle={this.toggleModel}>
                         <DropdownToggle caret size="sm">Model</DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem>
+                            
                                 <div className='models_container'>
                                     {this.getModels()}
                                 </div>
-                            </DropdownItem>
+                    
                         </DropdownMenu>
                     </Dropdown>
-                    <div className='modelName'>{this.state.currentModel}</div>
+               
+                </ButtonGroup>
+                <div className='modelName'>{this.checkModel()}</div>
+                <div>
                     {
                         this.state.currentMake && this.state.currentModel ?
-                        <Link to={`/search/${this.state.currentMake}/${this.state.currentModel}`}><Button color="primary" size="sm" onClick={this.clickedSearch}>Search</Button></Link>
-                        :
-                        <Button color="primary" size="sm" onClick={this.clickedSearchWithoutInfo}>Search</Button>
+                            <Link to={`/search/${this.state.currentMake}/${this.state.currentModel}`}><div className='srch-btn' size="sm" onClick={this.clickedSearch}>Search</div></Link>
+                            :
+                            <div className='srch-btn' size="sm" onClick={this.clickedSearchWithoutInfo}>Search</div>
                     }
-                </ButtonGroup>
-            </>
+
+                </div>
+
+
+            </div>
         );
     }
 }

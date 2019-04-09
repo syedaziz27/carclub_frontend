@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
 import AuthContext from '../contexts/auth';
+import WelcomePage from './welcomePage';
+import img from '../images/maserati2.jpg'
 import './home.css'
 
+
 class Home extends Component {
+
     render() {
         return (
-            <>
+            <div className='home-container'>
             <AuthContext.Consumer>
             {
               (user) => {
                 if (user) {
                   return (
-                    <>
-                      <h2>Welcome back, {user.username}</h2>
-                      <h4>Your ID is: {user.uid}</h4>
-                    </>
+                    <div className='login-grid'>
+                      <h2 className='welcome'>Welcome back, {user.username}</h2>
+                     <img className='home-img' src={img} alt=''/>
+                    </div>
                   )
                 } else {
                   return (
                     <>
-                        <h2>You are not logged in.</h2>
+                        <WelcomePage/>
                     </>
                   ) 
                 }
@@ -27,8 +31,8 @@ class Home extends Component {
             }
 
           </AuthContext.Consumer>
-          <img className='home_img' src='https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/model/one-off/centenario/slider/centenario.jpg' alt=''/>
-          </>
+          
+          </div>
         )
     }
 }

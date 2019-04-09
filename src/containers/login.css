@@ -1,0 +1,31 @@
+/* .login-grid {
+    display: grid;
+    background-color: black;
+    grid-template-columns: repeat(2, 1fr)
+} */
+
+.login-items {
+    width: 50%;
+    background-color: black;
+    opacity: .7;
+    /* grid-row: 1;
+    grid-column: 1; */
+    position: absolute;
+    top: 50%;
+    right: 3%;
+    font-size: 3vw;
+    color: white;
+}
+/* 
+.login-img {
+    grid-row: 1;
+    grid-column: 1;
+} */
+
+.login {
+    position: absolute;
+    top: 30%;
+    right: 26%;
+    color: white;
+    opacity: .7;
+}

@@ -1,5 +1,28 @@
-.img-container {
-    width: 200px;
-    height: 200px;
-    border: 1px solid black;
+.signin-container {
+    /* display: grid;
+    grid-template-columns: repeat(1, 1fr);
+ */
+
+}
+
+.grid-form {
+    position: absolute;
+    top: 30%;
+    right: 36%;
+    color: white;
+    opacity: .8;
+    background-color: black;
+    width: 25%;
+    border: 1px solid whitesmoke;
+    border-radius: 25px;
+    padding: 10px;
+}
+
+.signin {
+    width: 100%;
+    align-content: center;
+}
+
+.signin-header {
+    right: 36%
 }
