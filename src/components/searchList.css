@@ -75,6 +75,7 @@ button.dropdown-toggle:hover {
     border: 2px solid whitesmoke;
     border-radius: 25px; 
     cursor: pointer;
+    text-decoration: none;
 }
 
 .dropdown-menu.show {

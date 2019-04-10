@@ -3,6 +3,7 @@ import AuthContext from '../contexts/auth';
 import * as firebase from 'firebase';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import './myCar.css';
 
 export default class MyCars extends React.Component {
 
@@ -35,12 +36,15 @@ export default class MyCars extends React.Component {
         return this.state.myCars.map((e, i) => {
             console.log(e)
             return (
-                <Link key={i} to={`/vehicle/${e.id}`}>
+                <div className='each-car' key={i}>
+                             <Link  to={`/vehicle/${e.id}`} className='name-link'>
                     <div className='car_container' key={i} carid={e.id}>
-                        <div className='img_container'><img src={e.frontimg} alt={e.frontimg}></img></div>
-                        <h3>{e.make} {e.model}</h3>
+                        <div className='img_container'><img src={e.frontimg} alt={e.frontimg} style={{maxHeight: '20vh'}}></img></div>
+                        <h3><span>{e.year}</span> {e.make} {e.model}</h3>
                     </div>
                 </Link>
+                </div>
+       
             )
         })
     } 
@@ -50,11 +54,15 @@ export default class MyCars extends React.Component {
                      {
                         user => {
                             if (user) return (
-                                <>
-                                    <div>{user.username}'s Car List</div>
-                                    <br></br>
-                                    <this.Cars />
-                                </>
+                                <div className='my-carlist'>
+                                    <div className='col-left'></div>
+                                    <div className='col-center'>
+                                        <h2 style={{color:'white'}}>Your Car List</h2>
+                                        <this.Cars />
+                                    </div>
+                                    <div className='col-right'></div>
+                                    
+                                </div>
                             )
                             else return (
                                 <h3>Please Login to See Your Cars</h3>

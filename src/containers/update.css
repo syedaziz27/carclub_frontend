@@ -1,0 +1,16 @@
+.update-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: black;
+    color: white;
+    grid-column-gap: 10vw;
+}
+
+.img-container {
+    overflow: hidden;
+}
+
+.profile-img {
+    max-height: 40vh;
+    max-width: 30vw;
+}

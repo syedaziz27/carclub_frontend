@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AuthContext from '../contexts/auth';
 import WelcomePage from './welcomePage';
-import img from '../images/maserati2.jpg'
+import img from '../images/lamb.jpg'
 import './home.css'
 
 

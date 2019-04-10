@@ -22,6 +22,7 @@ export default class Header extends React.Component {
         <Link className='grid-link' to="/myfavorites"><div className="grid-item">My Favorites</div></Link>
     </>
 
+
     render() {
         return (
             <>
@@ -37,7 +38,7 @@ export default class Header extends React.Component {
                                     <>
 
                                         {this.loggedIn}
-                                        <div className="grid-item"><Link className='grid-link'>{user.username}</Link></div>
+                                        <div className="grid-item"><Link to='/mycars'className='grid-link'>{user.username}</Link></div>
                                         <div className="grid-item"><img className='profile_pic' src={user.picture} alt={user.picture}></img></div>
 
                                     </>

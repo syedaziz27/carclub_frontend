@@ -1,7 +1,11 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import AuthContext from '../contexts/auth';
 import * as firebase from 'firebase';
 import Axios from 'axios';
+import placeholder from '../images/placeholder.jpeg';
+import './update.css';
+import uid from 'uid';
 
 export default class Update extends React.Component {
 
@@ -13,7 +17,11 @@ export default class Update extends React.Component {
         year: null,
         picture: null,
         mileage: null,
-        price: null
+        price: null,
+        placeholder,
+        fb_link:null,
+        carImage: null,
+        updated: false
     }
 
     componentDidMount() {
@@ -30,6 +38,8 @@ export default class Update extends React.Component {
 
     storePhoto = async (e) => {
         const firstFile = e.target.files[0];
+        const preview = URL.createObjectURL(e.target.files[0]);
+        this.setState({placeholder: preview, fb_link: firstFile});
 
         const root = firebase.storage().ref();
         const newImage = root.child(`${this.state.email}/profilepic/${firstFile.name}`);
@@ -43,7 +53,7 @@ export default class Update extends React.Component {
 
             const data = await Axios.put('http://localhost:3004/user/photo', { email, picture })
             console.log(data);
-            document.location.reload()
+        //     document.location.reload()
         }
 
         catch (err) {
@@ -53,9 +63,13 @@ export default class Update extends React.Component {
 
     uploadFrontPhoto = async (e) => {
         const file = e.target.files[0];
+        const preview = URL.createObjectURL(e.target.files[0]);
+        if (preview === 'undefined') return;
+        this.setState({carImage: preview});
 
+        const id = uid();
         const root = firebase.storage().ref();
-        const pic = root.child(`${this.state.email}/car/${file.name}`);
+        const pic = root.child(`${this.state.email}/car/${file.name}-${id}`);
 
         try {
             const snapshot = await pic.put(file)
@@ -89,13 +103,13 @@ export default class Update extends React.Component {
 
     typeYear = (e) => {
         console.log(e.target.value);
-        this.setState({year: e.target.value}, () => console.log(this.state))
+        this.setState({ year: e.target.value }, () => console.log(this.state))
     }
     typeMiles = (e) => {
-        this.setState({mileage: e.target.value})
+        this.setState({ mileage: e.target.value })
     }
     typePrice = (e) => {
-        this.setState({price: e.target.value})
+        this.setState({ price: e.target.value })
     }
 
     handleSubmit = async (e) => {
@@ -108,7 +122,10 @@ export default class Update extends React.Component {
         }
 
         else {
-            const data = await Axios.post('http://localhost:3004/car/front', { email, picture, make, model, color, year, mileage, price })
+            const data = await Axios.post('http://localhost:3004/car/front', { email, picture, make, model, color, year, mileage, price });
+            this.setState({updated: true});
+            alert('Updated Successfully');
+
             console.log(data);
 
         }
@@ -119,21 +136,22 @@ export default class Update extends React.Component {
     storeCarPics = async (e) => {
         const files = e.target.files;
         console.log(files)
-        const root = firebase.storage().ref();
+        this.setState({carPics: e.target.files}, ()=> console.log(this.state))
+        // const root = firebase.storage().ref();
 
-        for (let i = 0; i < files.length; i++) {
-            const carPics = root.child(`${this.state.email}/car/${files[i].name}`);
+        // for (let i = 0; i < files.length; i++) {
+        //     const carPics = root.child(`${this.state.email}/car/${files[i].name}`);
 
-            try {
-                const snapshot = await carPics.put(files[i]);
-                const url = await snapshot.ref.getDownloadURL();
-                console.log(url)
-            }
+        //     try {
+        //         const snapshot = await carPics.put(files[i]);
+        //         const url = await snapshot.ref.getDownloadURL();
+        //         console.log(url)
+        //     }
 
-            catch (err) {
-                console.log(err)
-            }
-        }
+        //     catch (err) {
+        //         console.log(err)
+        //     }
+        // }
 
     }
 
@@ -143,68 +161,58 @@ export default class Update extends React.Component {
                 {
                     (user) => {
                         if (user) {
+                            if (this.state.updated) return <Redirect to='/'></Redirect>
                             return (
-                                <>
-                                    <div><h1>Update your profile, {user.username} </h1>
-                                        <div className='container'>
-                                            <div className="input-group mb-3">
-                                                <div className="custom-file">
-                                                    <input type="file" className="custom-file-input" onChange={this.storePhoto} />
-                                                    <label className="custom-file-label">Upload Profile Image</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div className='update-container'>
+                                      <div className="img-container">
+                                        <img className='profile-img' src={this.state.carImage}></img>
                                     </div>
-                                    <div className='container'>
-
-                                        <div className="input-group mb-3">
-                                            <div className="custom-file">
-                                                <input type="file" className="custom-file-input" multiple onChange={this.uploadFrontPhoto} />
-                                                <label className="custom-file-label">upload vehicle images</label>
-                                            </div>
-                                            <div className="input-group mb-3">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text" id="inputGroup-sizing-default">Make</span>
-                                                </div>
-                                                <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typeMake} />
-                                            </div>
-                                            <div className="input-group mb-3">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text" id="inputGroup-sizing-default">Model</span>
-                                                </div>
-                                                <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typeModel} />
-                                            </div>
-                                            <div className="input-group mb-3">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text" id="inputGroup-sizing-default">Color</span>
-                                                </div>
-                                                <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typeColor} />
-                                            </div>
-                                            <div className="input-group mb-3">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text" id="inputGroup-sizing-default">Year</span>
-                                                </div>
-                                                <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typeYear} />
-                                            </div>
-                                            <div className="input-group mb-3">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text" id="inputGroup-sizing-default">Mileage</span>
-                                                </div>
-                                                <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typeMiles} />
-                                            </div>
-                                            <div className="input-group mb-3">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text" id="inputGroup-sizing-default">Price</span>
-                                                </div>
-                                                <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onChange={this.typePrice} />
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div>
+                                    <h1>Update your profile, {user.username} </h1>
                                     <br></br>
-                                    <div><button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Add Car</button></div>
+                                    <h3>Upload Your Profile Image</h3>
+                                    <div className="input-group mb-3">
+                                        <div className="custom-file">
+                                            <input type="file" className="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" onChange={this.storePhoto} />
+                                            <label className="custom-file-label" htmlFor="inputGroupFile01">Choose file</label>
+                                        </div>
+                                    </div>
+                                    <h3>Upload Car Images</h3>
+                                    <div className="custom-file">
+                                        <input type="file" className="custom-file-input" multiple onChange={this.uploadFrontPhoto} />
+                                        <label className="custom-file-label">Upload Vehicle Images</label>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Make</label>
+                                        <input className="form-control" placeholder="Enter Make" onChange={this.typeMake} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Model</label>
+                                        <input className="form-control" placeholder="Enter Model" onChange={this.typeModel}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Color</label>
+                                        <input className="form-control" placeholder="Enter Color" onChange={this.typeColor}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Mileage</label>
+                                        <input className="form-control" placeholder="Enter Mileage" onChange={this.typeMiles}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Year</label>
+                                        <input className="form-control" placeholder="Enter Year" onChange={this.typeYear}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Price</label>
+                                        <input className="form-control" placeholder="Enter Price" onChange={this.typePrice}/>
+                                    </div>
+                                    <div><button type="submit" className="btn btn-light" onClick={this.handleSubmit}>Add Car</button></div>
+                                    </div>
+                                    <div className="img-container">
+                                        <img className='profile-img' src={this.state.placeholder}></img>
+                                    </div>
 
-
-                                </>
+                                </div>
                             )
                         } else {
                             return <>You are not logged in</>

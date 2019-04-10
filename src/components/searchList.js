@@ -54,7 +54,7 @@ class SearchList extends Component {
             <>{
                 models.map((e, i) => {
                     return (
-                        <DropdownItem>
+                        <DropdownItem key={i}>
                             <div className='model' key={i} onClick={this.selectedModel}>{e}</div>
                         </DropdownItem>
                         
@@ -116,8 +116,8 @@ class SearchList extends Component {
                                     {
                                         this.state.cars.map((e, i) => {
                                             return (
-                                                <DropdownItem>
-                                                <div className='make' onClick={this.selectedMake} key={i}>{e.make}</div>
+                                                <DropdownItem key={i}>
+                                                <div className='make' onClick={this.selectedMake} >{e.make}</div>
                                                 </DropdownItem>
                                             )
                                         })

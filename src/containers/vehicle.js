@@ -2,7 +2,8 @@ import React from 'react';
 import AuthContext from '../contexts/auth';
 import * as firebase from 'firebase';
 import Axios from 'axios';
-import {Button} from 'reactstrap';
+import { Button } from 'reactstrap';
+import './vehicle.css'
 
 export default class Vehilcle extends React.Component {
 
@@ -16,13 +17,14 @@ export default class Vehilcle extends React.Component {
         frontimg: null,
         carid: null,
         owneremail: null,
-        userEmail: null
+        userEmail: null,
+        purchased: null
     }
 
     componentDidMount() {
         this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                this.setState({ useremail: user.email }, () => console.log(this.state))
+                this.setState({ userEmail: user.email }, () => console.log(this.state))
             }
             else {
                 console.log('hello')
@@ -34,35 +36,74 @@ export default class Vehilcle extends React.Component {
         Axios.get(`http://localhost:3004/car/${id}`)
             .then(data => {
                 console.log(data.data.data)
-                const {make, model, color, year, mileage, price, frontimg, id, owneremail} = data.data.data
-                this.setState({make, model, color, year, mileage, price, frontimg, carid:id, owneremail}, () => console.log(this.state))
+                const { make, model, color, year, mileage, price, frontimg, id, owneremail, purchased } = data.data.data
+                this.setState({ make, model, color, year, mileage, price, frontimg, carid: id, owneremail, purchased }, () => console.log(this.state))
             })
             .catch(err => console.log(err))
     }
 
     favButton = (e) => {
         console.log('added to favs');
-        if (!this.state.useremail) {
-            alert('Please login to add to favorites.')
-    }
-        if (this.state.owneremail === this.state.useremail) {
+        if (!this.state.userEmail) {
+            alert('Please login to add to favorites.');
+            return;
+        }
+        if (this.state.owneremail === this.state.userEmail) {
             alert('this is your car lol');
             return;
         }
-        const {carid, useremail, make, model, year, mileage, price, color, frontimg} = this.state;
-        Axios.post('http://localhost:3004/car/addfav', {carid, make, model, color, year, price, useremail, mileage, frontimg})
+        const { carid, userEmail, make, model, year, mileage, price, color, frontimg } = this.state;
+        Axios.post('http://localhost:3004/car/addfav', { carid, make, model, color, year, price, userEmail, mileage, frontimg })
             .then(res => console.log(res))
             .catch(err => console.log(err))
     }
 
+    thousands_separators = (num) => {
+        const num_parts = num.toString().split(".");
+        num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return num_parts.join(".");
+    }
+
+    buyButton = (e) => {
+        if (!this.state.userEmail) {
+            alert('Please login to purchase.');
+            return;
+        }
+        if (this.state.owneremail === this.state.userEmail) {
+            alert('this is your car lol');
+            return;
+        }
+        const {userEmail, carid} = this.state;
+        Axios.put('http://localhost:3004/car/newowner', {userEmail, carid})
+            .then(data => console.log(data))
+            .then(() => this.setState({purchased: true}))
+            .catch(err => console.log(err))
+    }
 
 
     render() {
         return (
-            <div className='car_container'>
-                <h1>{this.state.year} {this.state.make} {this.state.model}</h1>
-                <img src={this.state.frontimg} alt={this.state.frontimg}></img>
-                <Button onClick={this.favButton}>Add to Favorites</Button>
+            <div className='profile-container'>
+                <div></div>
+                <div>
+                    <h1 className='header' style={{ color: 'white' }}>{this.state.year} {this.state.make} {this.state.model}</h1>
+                    <div><img src={this.state.frontimg} alt={this.state.frontimg} className='frontimg'></img></div>
+                    <div><Button className='btn-light' onClick={this.favButton} style={{ margin: '10px' }}>Add to Favorites</Button>
+                        {
+                            !this.state.purchased ?
+                            <Button className='btn-light' onClick={this.buyButton} style={{ margin: '10px' }}>Purchase</Button>
+                            :
+                            <Button className='btn-danger' onClick={() => alert('Sorry, car has been sold')} style={{ margin: '10px' }}>SOLD</Button>
+                        }
+                       
+                    </div>
+                    <div>
+                        <p style={{ color: 'white', fontSize: '2vw' }}>This is a {this.state.color} {this.state.year} {this.state.make} {this.state.model}. It has {this.state.mileage} mile(s). The asking price is ${this.state.price}. </p>
+                    </div>
+                </div>
+
+
+                <div></div>
             </div>
         )
     }

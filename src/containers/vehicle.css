@@ -1,0 +1,13 @@
+.profile-container {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    justify-items: center;
+    background-color: rgba(0, 0, 0, 0.897);
+    min-height: 80vh;
+    text-align: center;
+}
+
+.frontimg {
+    width: 100%
+}
+

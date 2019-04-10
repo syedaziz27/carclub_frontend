@@ -1,0 +1,8 @@
+  /* .carousel {
+    max-width: 1200px;
+    max-height: 500px;
+  } */
+
+  .img.d-block.w-100 {
+    max-height: 50vh
+  }

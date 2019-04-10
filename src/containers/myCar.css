@@ -1,0 +1,40 @@
+.my-carlist {
+    display: grid;
+    /* background-color: black; */
+    grid-template-columns: repeat(3, 1fr);
+    min-height: 90vh;
+}
+
+.col-left {
+    background-color: black;
+    opacity: 0.93;
+}
+.col-center {
+    background-color: black;
+    text-align: center
+}
+.each-car {
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 30px;
+    box-sizing: border-box;
+    margin: 10px;
+    text-align: center;
+}
+
+.each-car:hover {
+    border: 3px solid lightblue;
+}
+
+.col-right {
+    background-color: black;
+    opacity: 0.93;
+}
+
+.name-link {
+    color: white;
+}
+
+.name-link:hover {
+    color: aliceblue;
+}

@@ -45,20 +45,20 @@ export default class Signup extends React.Component {
       .then(() => this.setState({ email, password, username, city, state, zip }))
       .catch(err => {
         const { message } = err;
-        this.setState({ error: message });
+        alert(err)
+        return;
+        // this.setState({ error: message });
       })
   }
 
 
   render() {
     const { email, password, username, city, state, zip, error } = this.state;
-    const displayError = error === '' ? '' : <div className="alert alert-danger" role="alert">{error}</div>
     const displayForm =
 
       <>
         <div className='signin-container'>
         <img src={ferrari}></img>
-          {/* {displayError} */}
           <div className='grid-form'>
             <form className='signin'>
             <h1 className='siginin-header'>Sign Up</h1>
@@ -87,7 +87,7 @@ export default class Signup extends React.Component {
                 <input className="form-control" placeholder="Enter Zip Code" name="zip" value={zip} onChange={this.handleChange} />
               </div>
               <br></br>
-              <div><button type="submit" class="btn btn-light" onClick={this.handleSubmit}>Sign Up</button></div>
+              <div><button type="submit" className="btn btn-light" onClick={this.handleSubmit}>Sign Up</button></div>
             </form>
           </div>
           <div></div>
