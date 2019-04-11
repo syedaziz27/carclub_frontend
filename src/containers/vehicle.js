@@ -73,10 +73,19 @@ export default class Vehilcle extends React.Component {
             alert('this is your car lol');
             return;
         }
-        const {userEmail, carid} = this.state;
+
+        const {make, model, color, year, mileage, price, frontimg, carid, userEmail, purchased} = this.state;
+
         Axios.put('http://localhost:3004/car/newowner', {userEmail, carid})
             .then(data => console.log(data))
-            .then(() => this.setState({purchased: true}))
+            .then(() => {
+                const sellerEmail = this.state.owneremail;
+                const buyerEmail = this.state.userEmail;
+
+                Axios.post('http://localhost:3004/car/transaction', {make, model, color, year, mileage, price, frontimg, carid, buyerEmail, sellerEmail, purchased} )
+            })
+            .then((data) => console.log(data))
+            .then(() => this.setState({purchased: true}), ()=> alert('Congratulations on Your Purchase '))
             .catch(err => console.log(err))
     }
 

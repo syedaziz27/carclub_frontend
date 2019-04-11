@@ -39,6 +39,7 @@ export default class Update extends React.Component {
     storePhoto = async (e) => {
         const firstFile = e.target.files[0];
         const preview = URL.createObjectURL(e.target.files[0]);
+        if (preview === 'undefined') return;
         this.setState({placeholder: preview, fb_link: firstFile});
 
         const root = firebase.storage().ref();
