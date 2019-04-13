@@ -33,7 +33,7 @@ export default class Vehilcle extends React.Component {
 
         const id = this.props.match.params.vehicleID
         console.log(id)
-        Axios.get(`http://localhost:3004/car/${id}`)
+        Axios.get(`https://carclub-backend.herokuapp.com/car/${id}`)
             .then(data => {
                 console.log(data.data.data)
                 const { make, model, color, year, mileage, price, frontimg, id, owneremail, purchased } = data.data.data
@@ -53,7 +53,7 @@ export default class Vehilcle extends React.Component {
             return;
         }
         const { carid, userEmail, make, model, year, mileage, price, color, frontimg } = this.state;
-        Axios.post('http://localhost:3004/car/addfav', { carid, make, model, color, year, price, userEmail, mileage, frontimg })
+        Axios.post('https://carclub-backend.herokuapp.com/car/addfav', { carid, make, model, color, year, price, userEmail, mileage, frontimg })
             .then(res => console.log(res))
             .catch(err => console.log(err))
     }
@@ -76,16 +76,17 @@ export default class Vehilcle extends React.Component {
 
         const {make, model, color, year, mileage, price, frontimg, carid, userEmail, purchased} = this.state;
 
-        Axios.put('http://localhost:3004/car/newowner', {userEmail, carid})
+        Axios.put('https://carclub-backend.herokuapp.com/car/newowner', {userEmail, carid})
             .then(data => console.log(data))
             .then(() => {
                 const sellerEmail = this.state.owneremail;
                 const buyerEmail = this.state.userEmail;
 
-                Axios.post('http://localhost:3004/car/transaction', {make, model, color, year, mileage, price, frontimg, carid, buyerEmail, sellerEmail, purchased} )
+                Axios.post('https://carclub-backend.herokuapp.com/car/transaction', {make, model, color, year, mileage, price, frontimg, carid, buyerEmail, sellerEmail, purchased} )
             })
             .then((data) => console.log(data))
-            .then(() => this.setState({purchased: true}), ()=> alert('Congratulations on Your Purchase '))
+            .then(() => alert('Congratulations on Your Purchase!'))
+            .then(() => this.setState({purchased: true}))
             .catch(err => console.log(err))
     }
 

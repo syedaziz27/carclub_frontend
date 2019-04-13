@@ -52,7 +52,7 @@ export default class Update extends React.Component {
             const email = this.state.email;
             const picture = url;
 
-            const data = await Axios.put('http://localhost:3004/user/photo', { email, picture })
+            const data = await Axios.put('https://carclub-backend.herokuapp.com/user/photo', { email, picture })
             console.log(data);
         //     document.location.reload()
         }
@@ -123,7 +123,7 @@ export default class Update extends React.Component {
         }
 
         else {
-            const data = await Axios.post('http://localhost:3004/car/front', { email, picture, make, model, color, year, mileage, price });
+            const data = await Axios.post('https://carclub-backend.herokuapp.com/car/front', { email, picture, make, model, color, year, mileage, price });
             this.setState({updated: true});
             alert('Updated Successfully');
 

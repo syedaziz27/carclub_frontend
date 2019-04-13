@@ -14,7 +14,7 @@ export default class Favorites extends React.Component {
     componentDidMount() {
         this.unsubscribe = firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                Axios.get(`http://localhost:3004/user/favorites/${user.email}`)
+                Axios.get(`https://carclub-backend.herokuapp.com/user/favorites/${user.email}`)
                     .then(res => this.setState({ email: user.email, favorites: res.data.data }, () => console.log(this.state)))
                     .catch(err => console.log(err))
             }

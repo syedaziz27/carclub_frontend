@@ -18,7 +18,7 @@ class Search extends Component {
         const make = this.props.match.params.make;
         const model = this.props.match.params.model;
 
-        Axios.get(`http://localhost:3004/car/search/${make}/${model}`)
+        Axios.get(`https://carclub-backend.herokuapp.com/car/search/${make}/${model}`)
             .then(data => {
                 this.setState({make, model, cars:data.data.data}, () => console.log(this.state))
             })
@@ -30,7 +30,7 @@ class Search extends Component {
             // this.setState({make: this.props.match.params.make, model:this.props.match.params.model, cars:null});
             const make = this.props.match.params.make;
             const model = this.props.match.params.model;
-            Axios.get(`http://localhost:3004/car/search/${make}/${model}`)
+            Axios.get(`https://carclub-backend.herokuapp.com/car/search/${make}/${model}`)
             .then(data => {
                 this.setState({make, model, cars:data.data.data}, () => console.log(this.state.cars))
             })

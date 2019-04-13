@@ -25,7 +25,7 @@ export default class MyCars extends React.Component {
     }
 
     getCars = async (email) => {
-        const data = await Axios.get(`http://localhost:3004/car/mycars/${email}`)
+        const data = await Axios.get(`https://carclub-backend.herokuapp.com/car/mycars/${email}`)
         const myCars = data.data.data;
         this.setState({email, myCars})
 

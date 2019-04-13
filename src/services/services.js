@@ -2,10 +2,10 @@ const ServiceWorker = {};
 const Axios = require('axios');
 
 
-ServiceWorker.getUserData = (email) => Axios.get(`http://localhost:3004/user/${email}`);
+ServiceWorker.getUserData = (email) => Axios.get(`https://carclub-backend.herokuapp.com/user/${email}`);
 
 ServiceWorker.createUser = (username, email, city, state, zip) => {
-    return Axios.post(`http://localhost:3004/user/signup`, {
+    return Axios.post(`https://carclub-backend.herokuapp.com/user/signup`, {
         username,
         email,
         city,
@@ -16,7 +16,7 @@ ServiceWorker.createUser = (username, email, city, state, zip) => {
 }
 
 ServiceWorker.addUID = (username, uid) => {
-    return Axios.put(`http://localhost:3004/user/addUID`, {username, uid})
+    return Axios.put(`https://carclub-backend.herokuapp.com/user/addUID`, {username, uid})
 }
 
 
